@@ -3,7 +3,7 @@ from unittest import skipUnless
 from django.db import connection
 from django.core import serializers
 from django.test import TestCase as DjangoTestCase
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django import forms
 
 from jsonfield.tests.jsonfield_test_app.models import *  # NOQA
@@ -61,7 +61,7 @@ class JSONFieldTest(DjangoTestCase):
         formfield = field.formfield()
         self.assertRaisesMessage(
             forms.ValidationError,
-            force_text(formfield.error_messages['required']),
+            force_str(formfield.error_messages['required']),
             formfield.clean,
             value='')
 
@@ -70,7 +70,7 @@ class JSONFieldTest(DjangoTestCase):
         formfield = field.formfield()
         self.assertRaisesMessage(
             forms.ValidationError,
-            force_text(formfield.error_messages['required']),
+            force_str(formfield.error_messages['required']),
             formfield.clean,
             value=None)
 
