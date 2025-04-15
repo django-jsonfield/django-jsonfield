@@ -36,8 +36,17 @@ def main():
     global_settings.STATIC_URL = "/static/"
     global_settings.MEDIA_ROOT = os.path.join(BASE_PATH, 'static')
     global_settings.STATIC_ROOT = global_settings.MEDIA_ROOT
-
     global_settings.SECRET_KEY = '334ebe58-a77d-4321-9d01-a7d2cb8d3eea'
+    if hasattr(global_settings, 'PASSWORD_RESET_TIMEOUT_DAYS'):
+        delattr(global_settings, 'PASSWORD_RESET_TIMEOUT_DAYS')
+    global_settings.PASSWORD_RESET_TIMEOUT = 259200
+    global_settings.DEFAULT_HASHING_ALGORITHM = 'sha256'
+    if hasattr(global_settings, 'STORAGES'):
+        if hasattr(global_settings, 'DEFAULT_FILE_STORAGE'):
+            delattr(global_settings, 'DEFAULT_FILE_STORAGE')
+        if hasattr(global_settings, 'STATICFILES_STORAGE'):
+            delattr(global_settings, 'STATICFILES_STORAGE')
+
     from django.test.utils import get_runner
     test_runner = get_runner(global_settings)
 
